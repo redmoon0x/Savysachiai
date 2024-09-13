@@ -8,6 +8,48 @@ load_dotenv()
 API_KEY = os.getenv("GENAI_API_KEY")
 
 genai.configure(api_key=API_KEY)
+models = [
+    "gemini-1.5-pro-exp-0827",
+    "gemini-1.5-flash",
+    "gemini-1.5-flash-exp-0827",
+    "gemini-1.5-flash-8b-exp-0827"
+]
+
+# Choose a random model from the list
+current_model = random.choice(models)
+
+# Configure Gemini AI
+genai.configure(api_key=API_KEY)
+
+generation_config = {
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_output_tokens": 1024,
+}
+
+safety_settings = [
+    {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+    {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+    {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+    {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+]
+
+def load_model(model_name):
+    try:
+        return genai.GenerativeModel(
+            model_name=model_name,
+            generation_config=generation_config,
+            safety_settings=safety_settings
+        )
+    except Exception as e:
+        st.error(f"Failed to load model {model_name}: {e}")
+        return None
+
+model = load_model(current_model)
+if not model:
+    st.error("Failed to load the specified models. Please check your API key and internet connection.")
+    st.stop()
 
 # Define your models and their corresponding system prompts
 characters = {
