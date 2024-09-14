@@ -61,8 +61,7 @@ characters = {
     """
 }
 
-# Streamlit UI
-st.title("Character Chatbot")
+
 
 # Character selection dropdown
 selected_character = st.sidebar.selectbox("Select a character", list(characters.keys()))
@@ -82,7 +81,7 @@ if "chat_session" not in st.session_state:
     st.session_state.chat_session = model.start_chat(history=[])
 
 # Streamlit UI
-st.title("Savyasachi Chatbot 🕉️")
+st.title("Savyasachi Chatbot ")
 
 # Sidebar for additional features
 st.sidebar.title("Additional Features")
@@ -126,11 +125,6 @@ if prompt := st.chat_input("Type your message here..."):
             # Add assistant response to chat history
             st.session_state.messages.append({"role": "assistant", "content": response.text})
 
-# Clear chat button
-if st.button("Clear Chat"):
-    st.session_state.messages = []
-    st.session_state.chat_session = model.start_chat(history=[])
-    st.experimental_rerun()
 # WhatsApp link
 # WhatsApp link
 whatsapp_url = "https://wa.me/6363711063"  # Replace with your WhatsApp number
