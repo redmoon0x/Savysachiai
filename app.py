@@ -360,4 +360,4 @@ footer = """
     </div>
 """
 
-st.markdown(footer, unsafe_allow_html=True)s
+st.markdown(footer, unsafe_allow_html=True)
